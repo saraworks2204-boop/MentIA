@@ -1,26 +1,47 @@
-# MentIA 🧠
+# MentIA — Plataforma de Soporte a la Decisión Clínica en Psiquiatría
 
-MentIA es un prototipo RAG (Retrieval-Augmented Generation) enfocado en la búsqueda, síntesis y recuperación de literatura clínica en PubMed, adaptado con múltiples roles de comunicación (psiquiatra, estudiante y paciente) y validaciones de seguridad para restringir consultas fuera del dominio de la salud mental.
+Prototipo de tesis de pregrado (Ingeniería Mecatrónica, Institución Universitaria EAM) que
+implementa un sistema RAG (Retrieval-Augmented Generation) especializado en psiquiatría
+(depresión, ansiedad, esquizofrenia y trastorno del espectro autista), con respuestas
+diferenciadas según el perfil del usuario: psiquiatra, estudiante o paciente.
 
-## Arquitectura del Proyecto
+## ¿Cómo funciona?
 
-- **`pubmed_fetcher.py`**: Búsqueda real en PubMed mediante Biopython/Entrez, con manejo de errores y mecanismos de fallback.
-- **`pipeline.py`**: Pipeline RAG completo que genera palabras clave con **Groq**, indexa abstracts en **ChromaDB** (con colecciones aisladas por consulta) y procesa respuestas con prompts diferenciados y filtros de seguridad.
-- **`ui/app.py`**: Interfaz interactiva desarrollada en **Streamlit** con selector de roles, historial de conversación y registro de estados de ejecución en vivo.
+1. El usuario escribe una consulta clínica en lenguaje natural.
+2. El sistema genera palabras clave en inglés y busca literatura relevante en PubMed.
+3. Los artículos recuperados se indexan en una base vectorial (ChromaDB).
+4. Se genera una respuesta fundamentada en la evidencia recuperada, adaptada al perfil
+   seleccionado (psiquiatra / estudiante / paciente).
 
----
+## Requisitos
 
-## Requisitos Previos
+- Python 3.11+
+- Una cuenta de NCBI (para `NCBI_API_KEY`, opcional pero recomendada)
+- Una API key de [Groq](https://console.groq.com/) (para `GROQ_API_KEY`)
 
-- Python 3.10 o superior.
-- Una cuenta en NCBI (para obtener credenciales de PubMed).
-- Una API Key de [Groq](https://console.groq.com/).
+## Instalación
 
----
+```bash
+git clone https://github.com/saraworks2204-boop/MentIA.git
+cd MentIA
+pip install -r requirements.txt
+```
 
-## Configuración del Entorno
+Copia `.env.example` a `.env` y completa tus claves reales:
 
-1. Clona el repositorio y entra a la carpeta del proyecto.
-2. Crea un archivo `.env` basado en la plantilla `.env.example`:
-   ```bash
-   cp .env.example .env
+```bash
+cp .env.example .env
+```
+
+## Ejecución
+
+```bash
+streamlit run ui/app.py
+```
+
+La aplicación abrirá en `http://localhost:8501`.
+
+## Aviso
+
+Este es un prototipo de investigación académica. No sustituye el criterio médico
+profesional ni genera diagnósticos clínicos vinculantes.
