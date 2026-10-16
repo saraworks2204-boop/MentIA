@@ -2,10 +2,9 @@ streamlit
 langchain
 langchain-community
 langchain-core
-langchain-openai
+langchain-groq
 chromadb
 biopython
 python-dotenv
 pydantic
-langchain-groq
 sentence-transformers
